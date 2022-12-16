@@ -26,7 +26,7 @@ function Index({ children, page }) {
           <ButtonGroup>
             <Button
               animation={false}
-              className="bg-transparent border-primary w-36 hover:border-primary"
+              className="bg-transparent border-primary w-28 hover:border-primary"
               size="md"
               active={page === 1}
               onClick={() => router.push("/tradingview")}
@@ -35,7 +35,7 @@ function Index({ children, page }) {
             </Button>
             <Button
               animation={false}
-              className="bg-transparent border-primary w-36 hover:border-primary"
+              className="bg-transparent border-primary w-28 hover:border-primary"
               size="md"
               active={page === 2}
               onClick={() => router.push("/membership")}
@@ -44,7 +44,7 @@ function Index({ children, page }) {
             </Button>
             <Button
               animation={false}
-              className="bg-transparent border-primary w-36 hover:border-primary"
+              className="bg-transparent border-primary w-28 hover:border-primary"
               size="md"
               active={page === 3}
               onClick={() => router.push("/videos")}

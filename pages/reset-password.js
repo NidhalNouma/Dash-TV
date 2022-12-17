@@ -8,8 +8,8 @@ function Reset() {
         <div className="flex justify-center items-center flex-wrap h-full g-6">
           <div className="grow-0 shrink-1 md:shrink-0 basis-auto xl:w-6/12 lg:w-6/12 md:w-9/12 mb-12 md:mb-0">
             <img
-              src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
-              className="w-full"
+              src="/bg-login.png"
+              className="w-full px-12"
               alt="Sample image"
             />
           </div>

@@ -33,7 +33,11 @@ function index() {
               <span className="bg-green-700 px-2 rounded-xl">
                 You have{" "}
                 <span className="font-bold">
-                  {getPlanByValue(membership.plan_id.toString())}
+                  {getPlanByValue(
+                    membership.plan_id
+                      ? membership.plan_id.toString()
+                      : membership.product_id.toString()
+                  )}
                 </span>{" "}
                 membership
               </span>
@@ -42,12 +46,13 @@ function index() {
                   State:{" "}
                   <span
                     className={`${
-                      membership.state === "active"
+                      membership.state === "active" ||
+                      membership.status === "completed"
                         ? "bg-green-700"
                         : "bg-red-600"
                     }  rounded-xl px-2`}
                   >
-                    {membership.state}
+                    {membership.state || membership.status}
                   </span>{" "}
                 </div>
 

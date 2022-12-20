@@ -25,7 +25,9 @@ function Username() {
           to edit.
         </p>
       )}
-      {!membership || membership.state !== "active" ? (
+      {!membership ||
+      membership.state !== "active" ||
+      membership.status !== "completed" ? (
         <div className="mt-3 flex mx-auto">
           <p className="bg-red-600 px-2 rounded-xl">
             No available active membership!

@@ -1,0 +1,46 @@
+name: Deploy to Firebase
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build and Deploy to Firebase
+    runs-on: ubuntu-latest
+    steps:
+      # - name: Checkout Repo
+      #   uses: actions/checkout@v2
+      # - name: Install Dependencies
+      #   run: npm ci
+      # - name: Build
+      #   run: npm run build
+      # - name: Deploy to Firebase
+      #   uses: w9jds/firebase-action@master
+      #   with:
+      #     args: deploy --only functions,hosting
+
+      - uses: actions/checkout@v2
+      - run: npm ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_TRUSTED_SIGNALS }}"
+          projectId: trusted-signals
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
+          NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY}}
+          NEXT_PUBLIC_LANDING_URL: ${{ secrets.NEXT_PUBLIC_LANDING_URL}}
+          NEXT_PUBLIC_PADDLE_VENDOR_ID: ${{ secrets.NEXT_PUBLIC_PADDLE_VENDOR_ID}}
+          NEXT_PUBLIC_PADDLE_VENDOR_AUTH_CODE: ${{ secrets.NEXT_PUBLIC_PADDLE_VENDOR_AUTH_CODE}}
+          NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_BASIC: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_BASIC}}
+          NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_PRO: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_PRO}}
+          NEXT_PUBLIC_PADDLE_PLAN_QUATERLY_PRO: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_QUATERLY_PRO}}
+          NEXT_PUBLIC_PADDLE_PLAN_YEARLY_PRO: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_YEARLY_PRO}}
+          NEXT_PUBLIC_PADDLE_PLAN_LIFE_TIME: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_LIFE_TIME}}
+          NEXT_PUBLIC_SESSION_ID_TV: ${{ secrets.NEXT_PUBLIC_SESSION_ID_TV}}
+          NEXT_PUBLIC_SCRIPTS_IDS: ${{ secrets.NEXT_PUBLIC_SCRIPTS_IDS}}

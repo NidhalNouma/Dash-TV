@@ -11,7 +11,7 @@ export const firebaseConfig = {
 
 export const tradingview_web = {
   sessionId: process.env.NEXT_PUBLIC_SESSION_ID_TV,
-  scriptIds: process.env.NEXT_PUBLIC_SCRIPTS_IDS.split(","),
+  scriptIds: process.env.NEXT_PUBLIC_SCRIPTS_IDS?.split(","),
 };
 
 export const paddle_web = {

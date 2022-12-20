@@ -1,10 +1,12 @@
 import React, { Fragment } from "react";
 import { Input, Button } from "react-daisyui";
+import { LoadBtn } from "../../components/Buttons";
 import { GetUserContext, UserTradingView } from "../../hooks/UserHook";
 
 function Username() {
   const { fullUser, setFullUser } = GetUserContext();
-  const { tvusername, setTVUserName, error, save, edit, setEdit } =
+  const membership = fullUser.paddle.result;
+  const { tvusername, setTVUserName, error, save, edit, setEdit, usernames } =
     UserTradingView(fullUser.id, fullUser.tradingViewUserName);
 
   return (
@@ -23,32 +25,57 @@ function Username() {
           to edit.
         </p>
       )}
-      <div className="mt-4">
-        {edit ? (
-          <Fragment>
-            <Input
-              className="bg-transparent border-white"
-              placeholder="Tradingview username"
-              type="text"
-              value={tvusername}
-              onChange={(e) => setTVUserName(e.target.value)}
-            />
-            <Button
-              className="ml-2 text-black hover:bg-white px-5"
-              onClick={async () => await save(setFullUser)}
-            >
-              Save
-            </Button>
-          </Fragment>
-        ) : (
-          <Fragment>
-            <span className="px-4 py-2 bg-gray-700 rounded-xl text-sm">
-              {tvusername}
-            </span>
-          </Fragment>
-        )}
-      </div>
-      <div className="flex justify-center my-auto">
+      {!membership || membership.state !== "active" ? (
+        <div className="mt-3 flex mx-auto">
+          <p className="bg-red-600 px-2 rounded-xl">
+            No available active membership!
+          </p>
+        </div>
+      ) : (
+        <div className="mt-4 mx-auto">
+          {edit ? (
+            <div className="relative flex items-center">
+              <Input
+                className="bg-transparent border-white"
+                placeholder="Tradingview username"
+                type="text"
+                value={tvusername}
+                onChange={(e) => setTVUserName(e.target.value)}
+              />
+              <LoadBtn
+                className="ml-2 text-black hover:bg-white px-5"
+                onClick={async () => await save(setFullUser)}
+              >
+                Save
+              </LoadBtn>
+
+              {
+                <div className="w-full absolute bg-gray-600 top-full mt-2 rounded-xl">
+                  {usernames.map((u, i) => (
+                    <div
+                      key={i}
+                      onClick={() => {
+                        setTVUserName(u.username);
+                      }}
+                      className="cursor-pointer flex items-center px-2 py-1"
+                    >
+                      <img src={u.userpic} className="h-8 w-8 rounded-full" />
+                      <span className="ml-2">{u.username}</span>
+                    </div>
+                  ))}
+                </div>
+              }
+            </div>
+          ) : (
+            <Fragment>
+              <span className="px-4 py-2 bg-gray-700 rounded-xl text-sm">
+                {tvusername}
+              </span>
+            </Fragment>
+          )}
+        </div>
+      )}
+      {/* <div className="flex justify-center my-auto">
         <iframe
           className="rounded-xl w-3/6 aspect-video"
           src="https://www.youtube.com/embed/-ZsQqEYsrQI"
@@ -57,7 +84,7 @@ function Username() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
           allowfullscreen
         ></iframe>
-      </div>
+      </div> */}
     </Fragment>
   );
 }

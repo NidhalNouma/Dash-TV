@@ -7,6 +7,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import axios from "axios";
 import { firebaseConfig } from "../Constant";
 const collName = "users";
 
@@ -29,7 +30,7 @@ export async function addNewUser(
     const docRef = await setDoc(
       doc(db, collName, userId),
       {
-        tradingViewUserName: displayName,
+        tradingViewUserName: "",
         active: true,
         email,
         displayName,
@@ -57,7 +58,8 @@ export async function getUser(id) {
 
   if (docSnap.exists()) {
     const user = docSnap.data();
-    return { id, ...user };
+    const paddle = await axios.post("/api/subs/getmail?email=" + user.email);
+    return { id, ...user, paddle: paddle.data };
   } else {
     console.log("No such document!");
     return null;
@@ -76,9 +78,21 @@ export async function updateUserData(id, key, value) {
   return nwh;
 }
 
-export async function updateUserTVuserName(id, value) {
+export async function updateUserTVuserName(id, value, oldValue) {
   console.log("Update user tvuserName ... ", id);
   const msgDoc = doc(db, collName, id);
+
+  if (oldValue) {
+    console.log("Removing old tv username ... ", oldValue);
+    const a = await axios.post("/api/tv/remove?s=" + oldValue);
+    console.log(a);
+  }
+
+  if (value) {
+    console.log("Adding new tv username ... ", value);
+    const a = await axios.post("/api/tv/add?s=" + value);
+    console.log(a);
+  }
 
   await updateDoc(msgDoc, {
     tradingViewUserName: value,

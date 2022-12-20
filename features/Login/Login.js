@@ -2,6 +2,7 @@ import React, { Fragment } from "react";
 import Third from "./Third";
 import Link from "next/link";
 import { Button, Input, Alert } from "react-daisyui";
+import { LoadBtn } from "../../components/Buttons";
 
 import { SignInHook } from "../../hooks/SignHook";
 
@@ -87,12 +88,12 @@ function IForm() {
       )}
 
       <div className="text-center lg:text-left">
-        <Button
+        <LoadBtn
           className="bg-primary hover:bg-primary text-white px-8 border-none w-full"
           onClick={async () => await submit()}
         >
           Sign in
-        </Button>
+        </LoadBtn>
 
         <p className="text-sm font-semibold mt-2 pt-1 mb-0">
           Don&apos;t have an account?{"  "}

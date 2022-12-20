@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import { getUser, updateUserTVuserName, addNewUser } from "../db/user";
 import { checkUser } from "../db/sign";
+import { SearchTVUserName } from "./TradingViewHook";
 
 export const UserC = createContext(null);
 
@@ -58,16 +59,24 @@ export const UserTradingView = (userId, name) => {
   const [error, setError] = useState();
   const [edit, setEdit] = useState(name ? false : true);
 
+  const { search, usernames } = SearchTVUserName();
+
   async function save(onComplete) {
     if (!tvusername) {
       setError("Fill your username");
       return null;
     }
-    const r = await updateUserTVuserName(userId, tvusername);
+    const r = await updateUserTVuserName(userId, tvusername, name);
     onComplete(r);
     setEdit(false);
     return r;
   }
 
-  return { tvusername, setTVUserName, error, save, edit, setEdit };
+  useEffect(() => {
+    if (tvusername.length > 0 && edit) {
+      search(tvusername);
+    }
+  }, [tvusername]);
+
+  return { tvusername, setTVUserName, error, save, edit, setEdit, usernames };
 };

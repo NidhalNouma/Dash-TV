@@ -10,7 +10,7 @@ function Index({ children, page }) {
   return (
     <main className="h-full">
       <div className="text-white mb-4 flex flex-col h-full">
-        <div className="w-full text-center sticky top-0 bg-black pb-4 mb-4 backdrop-blur-lg bg-opacity-80">
+        <div className="w-full text-center z-50 sticky top-0 bg-black pb-4 mb-4 backdrop-blur-lg bg-opacity-80">
           <div className="">
             <Image
               className="mx-auto"
@@ -48,7 +48,7 @@ function Index({ children, page }) {
             >
               membership
             </Button>
-            <Button
+            {/* <Button
               animation={false}
               className="bg-transparent border-primary w-28 hover:border-primary"
               size="md"
@@ -56,7 +56,7 @@ function Index({ children, page }) {
               onClick={() => router.push("/videos")}
             >
               videos
-            </Button>
+            </Button> */}
           </ButtonGroup>
         </div>
         {children}

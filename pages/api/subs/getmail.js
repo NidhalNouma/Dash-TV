@@ -12,7 +12,7 @@ export default async function handler(req, res) {
     try {
       const URL =
         "https://vendors.paddle.com/api/2.0/product/" +
-        paddle_plans["Life Time"] +
+        paddle_plans.Lifetime +
         "/transactions";
       const us = await axios.post(
         URL,

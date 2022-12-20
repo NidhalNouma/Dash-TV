@@ -56,26 +56,30 @@ function index() {
                   </span>{" "}
                 </div>
 
-                <div className="mt-2">
-                  click{" "}
-                  <a
-                    className="bg-gray-500 px-2 rounded-xl"
-                    href={membership.update_url}
-                  >
-                    here
-                  </a>{" "}
-                  to update your membership.
-                </div>
-                <div className="mt-2">
-                  click{" "}
-                  <a
-                    className="bg-gray-500 px-2 rounded-xl"
-                    href={membership.cancel_url}
-                  >
-                    here
-                  </a>{" "}
-                  to cancel your membership.
-                </div>
+                {membership.update_url && (
+                  <div className="mt-2">
+                    click{" "}
+                    <a
+                      className="bg-gray-500 px-2 rounded-xl"
+                      href={membership.update_url}
+                    >
+                      here
+                    </a>{" "}
+                    to update your membership.
+                  </div>
+                )}
+                {membership.cancel_url && (
+                  <div className="mt-2">
+                    click{" "}
+                    <a
+                      className="bg-gray-500 px-2 rounded-xl"
+                      href={membership.cancel_url}
+                    >
+                      here
+                    </a>{" "}
+                    to cancel your membership.
+                  </div>
+                )}
               </div>
             </div>
           )}

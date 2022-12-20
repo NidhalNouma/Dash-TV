@@ -24,7 +24,7 @@ export const paddle_plans = {
   "Monthly Pro": process.env.NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_PRO,
   "Quarterly Pro": process.env.NEXT_PUBLIC_PADDLE_PLAN_QUATERLY_PRO,
   "Yearly Pro": process.env.NEXT_PUBLIC_PADDLE_PLAN_YEARLY_PRO,
-  "Life Time": process.env.NEXT_PUBLIC_PADDLE_PLAN_LIFE_TIME,
+  Lifetime: process.env.NEXT_PUBLIC_PADDLE_PLAN_LIFE_TIME,
 };
 
 export function getPlanByValue(value) {

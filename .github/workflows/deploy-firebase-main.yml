@@ -52,8 +52,8 @@ jobs:
 
       - name: install firebase
         run: npm i firebase-tools -g
-      - name: firebase enable experiments
-        run: firebase experiments:enable
+      # - name: firebase enable experiments
+      #   run: firebase experiments:enable
       - name: deploy
         run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
         env:

@@ -7,21 +7,6 @@ on:
     branches: [main]
   workflow_dispatch:
 
-env:
-  FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
-  NEXT_PUBLIC_FIREBASE_API_KEY: ${{ secrets.NEXT_PUBLIC_FIREBASE_API_KEY}}
-  NEXT_PUBLIC_LANDING_URL: ${{ secrets.NEXT_PUBLIC_LANDING_URL}}
-  NEXT_PUBLIC_PADDLE_VENDOR_ID: ${{ secrets.NEXT_PUBLIC_PADDLE_VENDOR_ID}}
-  NEXT_PUBLIC_PADDLE_VENDOR_AUTH_CODE: ${{ secrets.NEXT_PUBLIC_PADDLE_VENDOR_AUTH_CODE}}
-  NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_BASIC: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_BASIC}}
-  NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_PRO: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_MONTHLY_PRO}}
-  NEXT_PUBLIC_PADDLE_PLAN_QUATERLY_PRO: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_QUATERLY_PRO}}
-  NEXT_PUBLIC_PADDLE_PLAN_YEARLY_PRO: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_YEARLY_PRO}}
-  NEXT_PUBLIC_PADDLE_PLAN_LIFE_TIME: ${{ secrets.NEXT_PUBLIC_PADDLE_PLAN_LIFE_TIME}}
-  NEXT_PUBLIC_SESSION_ID_TV: ${{ secrets.NEXT_PUBLIC_SESSION_ID_TV}}
-  NEXT_PUBLIC_SCRIPTS_IDS: ${{ secrets.NEXT_PUBLIC_SCRIPTS_IDS}}
-
 jobs:
   build:
     name: Build and Deploy to Firebase
@@ -52,8 +37,8 @@ jobs:
 
       - name: install firebase
         run: npm i firebase-tools -g
-      # - name: firebase enable experiments
-      #   run: firebase experiments:enable
+      - name: firebase enable experiments
+        run: firebase experiments:enable webframeworks
       - name: deploy
         run: firebase deploy --token ${{ secrets.FIREBASE_TOKEN }}
         env:

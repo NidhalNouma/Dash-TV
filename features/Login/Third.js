@@ -1,16 +1,18 @@
 import React from "react";
 import { Button } from "react-daisyui";
+import { LoadBtn } from "../../components/Buttons";
 import { ContinueWithGoogle } from "../../hooks/SignHook";
 
 function Third() {
   const { continueWithGoogleClick } = ContinueWithGoogle();
   return (
     <div className="">
-      <Button
+      <LoadBtn
+        loadColor="bg-white"
         onClick={async () => await continueWithGoogleClick()}
         className="bg-white hover:bg-white font-bold rounded-full "
         startIcon={<GIcon className="h-5 w-5" />}
-      ></Button>
+      ></LoadBtn>
     </div>
   );
 }

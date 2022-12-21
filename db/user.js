@@ -36,6 +36,8 @@ export async function addNewUser(
         displayName,
         metadata: { ...metadata },
         photoURL,
+        paddleId: "",
+        subscription_id: "",
         created_at: serverTimestamp(),
       }
       // { merge: true }
@@ -57,16 +59,43 @@ export async function getUser(id) {
   console.log("Getting user ...", id);
 
   if (docSnap.exists()) {
-    const user = docSnap.data();
-    const paddle = await axios.post("/api/subs/getmail?email=" + user.email);
-    return { id, ...user, paddle: paddle.data };
+    let user = docSnap.data();
+
+    let paddle = null;
+    if (!user.paddleId) {
+      paddle = await axios.post("/api/subs/getmail?email=" + user.email);
+      paddle = paddle?.data;
+
+      if (paddle.result) {
+        let paddleId = paddle.result.user_id;
+        if (!paddleId) paddleId = paddle.result?.user?.user_id;
+        if (paddleId) {
+          const cid = await updateUserData(id, "paddleId", paddleId, false);
+        }
+
+        const subId = paddle.result?.subscription_id;
+        if (subId) {
+          const cid = await updateUserData(id, "subscription_id", subId, false);
+        }
+      }
+    } else {
+      if (user.subscription_id) {
+        paddle = await axios.post("/api/subs/" + user.subscription_id);
+        paddle = { result: paddle.data, email: user.email };
+      } else {
+        paddle = await axios.post("/api/subs/user?userId=" + user.paddleId);
+        paddle = { result: paddle.data?.first, email: user.email };
+      }
+    }
+
+    return { id, ...user, paddle: paddle };
   } else {
     console.log("No such document!");
     return null;
   }
 }
 
-export async function updateUserData(id, key, value) {
+export async function updateUserData(id, key, value, getUser = true) {
   console.log("Update user data ... ", id);
   const msgDoc = doc(db, collName, id);
 
@@ -74,8 +103,10 @@ export async function updateUserData(id, key, value) {
     [key]: value,
   });
 
-  const nwh = await getUser(id);
-  return nwh;
+  if (getUser) {
+    const nwh = await getUser(id);
+    return nwh;
+  } else return true;
 }
 
 export async function updateUserTVuserName(id, value, oldValue) {

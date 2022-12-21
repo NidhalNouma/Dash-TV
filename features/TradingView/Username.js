@@ -44,6 +44,7 @@ function Username() {
                 onChange={(e) => setTVUserName(e.target.value)}
               />
               <LoadBtn
+                loadColor="bg-white"
                 className="ml-2 text-black hover:bg-white px-5"
                 onClick={async () => await save(setFullUser)}
               >

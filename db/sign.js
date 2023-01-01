@@ -13,6 +13,7 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { firebaseConfig } from "../Constant";
+import { errorMessageByCode } from "./authErrors";
 
 import { addNewUser, getUser } from "./user";
 
@@ -72,8 +73,7 @@ export async function signUp(email, password, username) {
     return {
       user: null,
       error,
-      // err: errorMessage,
-      err: "An error occurred while trying to sign up",
+      err: errorMessageByCode(error.code),
     };
   }
 }
@@ -98,7 +98,7 @@ export async function signIn(email, password) {
     const errorMessage = error.message;
     return {
       user: null,
-      err: "Email or password incorrect",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -135,7 +135,7 @@ export async function continueWithGoogle() {
     const credential = GoogleAuthProvider.credentialFromError(error);
     return {
       user: null,
-      err: "User doesn't exists",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -152,7 +152,7 @@ export async function signOutf() {
     const errorMessage = error.message;
     return {
       user: null,
-      err: "an error occurred while trying to sign out!",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -168,7 +168,7 @@ export async function changePassword(password) {
     const errorCode = error.code;
     const errorMessage = error.message;
     return {
-      err: "Error occurred while updating password",
+      err: errorMessageByCode(error.code),
       error,
     };
   }
@@ -184,7 +184,7 @@ export async function resetPassword(email) {
     const errorMessage = error.message;
     return {
       reset: null,
-      err: "Email not exist",
+      err: errorMessageByCode(error.code),
       error,
     };
   }

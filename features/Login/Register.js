@@ -74,7 +74,7 @@ function IForm() {
       {error && (
         <Alert
           status="error"
-          className="my-3"
+          className="my-3 bg-transparent text-red-400 border-2 border-red-400"
           icon={
             <svg
               xmlns="http://www.w3.org/2000/svg"

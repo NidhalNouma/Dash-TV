@@ -1,11 +1,12 @@
 import React from "react";
 import MainPage from "../features/MainPage";
-import { GetUserContext } from "../hooks/UserHook";
+import { GetUserContext, recheckSubs } from "../hooks/UserHook";
 import { getPlanByValue } from "../Constant";
+import { LoadBtn } from "../components/Buttons";
 
 function index() {
-  const { fullUser } = GetUserContext();
-  const membership = fullUser.paddle.result;
+  const { fullUser, setFullUser } = GetUserContext();
+  const membership = fullUser.paddle?.result;
 
   return (
     <MainPage page={2}>
@@ -27,6 +28,16 @@ function index() {
                 </a>{" "}
                 to get your subscription.
               </p>
+              <LoadBtn
+                className=" bg-transparent text-white mt-3"
+                loadColor="bg-white mt-4"
+                variant="link"
+                onClick={async () =>
+                  await recheckSubs(fullUser.id, setFullUser)
+                }
+              >
+                Recheck
+              </LoadBtn>
             </div>
           ) : (
             <div className="">

@@ -1,5 +1,10 @@
 import { createContext, useContext, useState, useEffect } from "react";
-import { getUser, updateUserTVuserName, addNewUser } from "../db/user";
+import {
+  getUser,
+  updateUserTVuserName,
+  addNewUser,
+  checkPaddleSubs,
+} from "../db/user";
 import { checkUser } from "../db/sign";
 import { SearchTVUserName } from "./TradingViewHook";
 
@@ -79,4 +84,12 @@ export const UserTradingView = (userId, name) => {
   }, [tvusername]);
 
   return { tvusername, setTVUserName, error, save, edit, setEdit, usernames };
+};
+
+export const recheckSubs = async (userId, setFullUser) => {
+  const r = await checkPaddleSubs(userId);
+  if (r) {
+    console.log(r);
+    setFullUser(r);
+  }
 };

@@ -62,6 +62,49 @@ export async function getUser(id) {
     let user = docSnap.data();
 
     let paddle = null;
+    // if (!user.paddleId) {
+    //   paddle = await axios.post("/api/subs/getmail?email=" + user.email);
+    //   paddle = paddle?.data;
+
+    //   if (paddle.result) {
+    //     let paddleId = paddle.result.user_id;
+    //     if (!paddleId) paddleId = paddle.result?.user?.user_id;
+    //     if (paddleId) {
+    //       const cid = await updateUserData(id, "paddleId", paddleId, false);
+    //     }
+
+    //     const subId = paddle.result?.subscription_id;
+    //     if (subId) {
+    //       const cid = await updateUserData(id, "subscription_id", subId, false);
+    //     }
+    //   }
+    // } else {
+    if (user.subscription_id) {
+      paddle = await axios.post("/api/subs/" + user.subscription_id);
+      paddle = { result: paddle.data, email: user.email };
+    } else if (user.paddleId) {
+      paddle = await axios.post("/api/subs/user?userId=" + user.paddleId);
+      paddle = { result: paddle.data?.first, email: user.email };
+    }
+    // }
+
+    return { id, ...user, paddle: paddle };
+  } else {
+    console.log("No such document!");
+    return null;
+  }
+}
+
+export async function checkPaddleSubs(id) {
+  const docRef = doc(db, collName, id);
+  const docSnap = await getDoc(docRef);
+
+  console.log("Checking user paddle subs ...", id);
+
+  if (docSnap.exists()) {
+    let user = docSnap.data();
+
+    let paddle = null;
     if (!user.paddleId) {
       paddle = await axios.post("/api/subs/getmail?email=" + user.email);
       paddle = paddle?.data;
@@ -77,14 +120,6 @@ export async function getUser(id) {
         if (subId) {
           const cid = await updateUserData(id, "subscription_id", subId, false);
         }
-      }
-    } else {
-      if (user.subscription_id) {
-        paddle = await axios.post("/api/subs/" + user.subscription_id);
-        paddle = { result: paddle.data, email: user.email };
-      } else {
-        paddle = await axios.post("/api/subs/user?userId=" + user.paddleId);
-        paddle = { result: paddle.data?.first, email: user.email };
       }
     }
 

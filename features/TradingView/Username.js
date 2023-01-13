@@ -5,7 +5,7 @@ import { GetUserContext, UserTradingView } from "../../hooks/UserHook";
 
 function Username() {
   const { fullUser, setFullUser } = GetUserContext();
-  const membership = fullUser.paddle.result;
+  const membership = fullUser.paddle?.result;
   const { tvusername, setTVUserName, error, save, edit, setEdit, usernames } =
     UserTradingView(fullUser.id, fullUser.tradingViewUserName);
 

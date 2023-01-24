@@ -3,27 +3,38 @@ import { Input, Button } from "react-daisyui";
 import { LoadBtn } from "../../components/Buttons";
 import { GetUserContext, UserTradingView } from "../../hooks/UserHook";
 
+import checkLifeTime from "../../lifetime/check";
+
 function Username() {
   const { fullUser, setFullUser } = GetUserContext();
-  const membership = fullUser.paddle?.result;
+  let membership = fullUser.paddle?.result;
+  if (!membership) {
+    const m = checkLifeTime(fullUser.email);
+    if (m) membership = { product_id: m, state: "active", status: "completed" };
+  }
+
   const { tvusername, setTVUserName, error, save, edit, setEdit, usernames } =
     UserTradingView(fullUser.id, fullUser.tradingViewUserName);
 
   return (
     <Fragment>
-      {edit ? (
-        <p>Set your user tradingview username to get our indicators.</p>
-      ) : (
-        <p>
-          This is your tradingview user name click{" "}
-          <spam
-            className="bg-gray-600 font-bold py-[1px] px-2 rounded-xl cursor-pointer"
-            onClick={() => setEdit(true)}
-          >
-            here
-          </spam>{" "}
-          to edit.
-        </p>
+      {membership && (
+        <div>
+          {edit ? (
+            <p>Set your user tradingview username to get our indicators.</p>
+          ) : (
+            <p>
+              This is your tradingview user name click{" "}
+              <spam
+                className="bg-gray-600 font-bold py-[1px] px-2 rounded-xl cursor-pointer"
+                onClick={() => setEdit(true)}
+              >
+                here
+              </spam>{" "}
+              to edit.
+            </p>
+          )}
+        </div>
       )}
       {!membership ||
       (membership.state !== "active" && membership.status !== "completed") ? (

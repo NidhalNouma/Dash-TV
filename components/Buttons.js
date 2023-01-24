@@ -6,6 +6,7 @@ export const LoadBtn = ({
   onClick,
   children,
   loadColor = "bg-primary",
+  loadMsg,
   ...props
 }) => {
   const [load, setLoad] = useState(false);
@@ -35,6 +36,7 @@ export const LoadBtn = ({
           {children}
         </Button>
       )}
+      {loadMsg && load && <span className="text-info">{loadMsg}</span>}
     </Fragment>
   );
 };

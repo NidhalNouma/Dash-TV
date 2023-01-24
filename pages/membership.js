@@ -3,10 +3,15 @@ import MainPage from "../features/MainPage";
 import { GetUserContext, recheckSubs } from "../hooks/UserHook";
 import { getPlanByValue } from "../Constant";
 import { LoadBtn } from "../components/Buttons";
+import checkLifeTime from "../lifetime/check";
 
 function index() {
   const { fullUser, setFullUser } = GetUserContext();
-  const membership = fullUser.paddle?.result;
+  let membership = fullUser.paddle?.result;
+  if (!membership) {
+    const m = checkLifeTime(fullUser.email);
+    if (m) membership = { product_id: m };
+  }
 
   return (
     <MainPage page={2}>
@@ -35,6 +40,7 @@ function index() {
                 onClick={async () =>
                   await recheckSubs(fullUser.id, setFullUser)
                 }
+                loadMsg="This may take up to 10 mins please allow it to fully load!"
               >
                 Recheck
               </LoadBtn>
@@ -53,19 +59,21 @@ function index() {
                 membership
               </span>
               <div className="mt-5">
-                <div className="">
-                  State:{" "}
-                  <span
-                    className={`${
-                      membership.state === "active" ||
-                      membership.status === "completed"
-                        ? "bg-green-700"
-                        : "bg-red-600"
-                    }  rounded-xl px-2`}
-                  >
-                    {membership.state || membership.status}
-                  </span>{" "}
-                </div>
+                {membership.state && (
+                  <div className="">
+                    State:{" "}
+                    <span
+                      className={`${
+                        membership.state === "active" ||
+                        membership.status === "completed"
+                          ? "bg-green-700"
+                          : "bg-red-600"
+                      }  rounded-xl px-2`}
+                    >
+                      {membership.state || membership.status}
+                    </span>{" "}
+                  </div>
+                )}
 
                 {membership.update_url && (
                   <div className="mt-2">

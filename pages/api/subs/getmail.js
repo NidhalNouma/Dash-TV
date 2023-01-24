@@ -37,7 +37,7 @@ export default async function handler(req, res) {
 
     while (pageCnt > 0) {
       try {
-        console.log("Checking subs page ", pageCnt);
+        console.log("Checking subs page ", pageCnt, r.email);
         const URL = "https://vendors.paddle.com/api/2.0/subscription/users";
         const us = await axios.post(
           URL,
@@ -82,7 +82,7 @@ export default async function handler(req, res) {
 
     while (pageCnt > 0) {
       try {
-        console.log("Checking trans page ", pageCnt);
+        console.log("Checking trans page ", pageCnt, r.email);
         const URL =
           "https://vendors.paddle.com/api/2.0/product/" +
           paddle_plans.Lifetime +

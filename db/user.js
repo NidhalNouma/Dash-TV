@@ -106,7 +106,11 @@ export async function checkPaddleSubs(id) {
 
     let paddle = null;
     if (!user.paddleId) {
-      paddle = await axios.post("/api/subs/getmail?email=" + user.email);
+      paddle = await axios.post(
+        "https://ssrtrustedsignals-3nfnn26ppa-uc.a.run.app/api/subs/getmail?email=" +
+          user.email
+      );
+      // paddle = await axios.post("/api/subs/getmail?email=" + user.email);
       paddle = paddle?.data;
 
       if (paddle.result) {

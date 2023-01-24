@@ -1,7 +1,29 @@
 import axios from "axios";
 import { paddle_web, paddle_plans } from "../../../Constant";
+import Cors from "cors";
+
+// Initializing the cors middleware
+const cors = Cors({
+  methods: ["POST", "HEAD"],
+});
+
+// Helper method to wait for a middleware to execute before continuing
+// And to throw an error when an error happens in a middleware
+function runMiddleware(req, res, fn) {
+  return new Promise((resolve, reject) => {
+    fn(req, res, (result) => {
+      if (result instanceof Error) {
+        return reject(result);
+      }
+
+      return resolve(result);
+    });
+  });
+}
 
 export default async function handler(req, res) {
+  await runMiddleware(req, res, cors);
+
   if (req.method !== "POST")
     return res.status(200).json({ err: "invalid request" });
 
@@ -102,6 +124,8 @@ export default async function handler(req, res) {
       }
     }
   }
+
+  console.log("end checking user paddle ", r);
 
   res.status(200).json(r);
 }

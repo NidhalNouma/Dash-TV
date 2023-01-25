@@ -4,7 +4,7 @@ import { Button, Input, Alert } from "react-daisyui";
 import { ResetPassword } from "../../hooks/SignHook";
 
 function Forgetpassword() {
-  const { email, setEmail, error, succes } = ResetPassword();
+  const { email, setEmail, error, succes, submit } = ResetPassword();
   return (
     <Fragment>
       <div className="flex flex-row items-center justify-center lg:justify-start">
@@ -51,7 +51,10 @@ function Forgetpassword() {
 
       <div className="text-center lg:text-left">
         {!succes ? (
-          <Button className="bg-primary hover:bg-primary text-white px-8 border-none w-full">
+          <Button
+            onClick={async () => await submit()}
+            className="bg-primary hover:bg-primary text-white px-8 border-none w-full"
+          >
             Send reset password mail
           </Button>
         ) : (
@@ -73,7 +76,7 @@ function Forgetpassword() {
               </svg>
             }
           >
-            Lorem ipsum dolor sit amet, consectetur adip!
+            {succes}
           </Alert>
         )}
         <p className="text-sm font-semibold mt-2 pt-1 mb-0">

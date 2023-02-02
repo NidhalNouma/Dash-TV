@@ -2,9 +2,7 @@
 
 const nextConfig = {
   reactStrictMode: true,
-};
 
-module.exports = {
   async rewrites() {
     console.log("Rewrites called");
     return [

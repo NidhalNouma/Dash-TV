@@ -12,7 +12,7 @@ export default async function handler(req, res) {
   for (let i = 0; i < tradingview_web.scriptIds.length; i++) {
     let id = tradingview_web.scriptIds[i];
     id = id.replace(/\s/g, "");
-    console.log(id, username);
+    console.log("remove ... ", id, username);
     try {
       const URL = "https://www.tradingview.com/pine_perm/remove/";
       const us = await axios.post(

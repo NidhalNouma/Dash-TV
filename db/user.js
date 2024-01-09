@@ -7,6 +7,7 @@ import {
   getDoc,
   updateDoc,
 } from "firebase/firestore";
+import { getSubscriptionsList } from "./membership";
 import axios from "axios";
 import { firebaseConfig } from "../Constant";
 const collName = "users";
@@ -62,6 +63,7 @@ export async function getUser(id) {
     let user = docSnap.data();
 
     let paddle = null;
+    let chargeBee = null;
     // if (!user.paddleId) {
     //   paddle = await axios.post("/api/subs/getmail?email=" + user.email);
     //   paddle = paddle?.data;
@@ -86,9 +88,15 @@ export async function getUser(id) {
       paddle = await axios.post("/api/subs/user?userId=" + user.paddleId);
       paddle = { result: paddle.data?.first, email: user.email };
     }
+    if (user.chargeBeeSubscriptionId) {
+      chargeBee = await axios.get(
+        "/api/chargebee/sub?subId=" + user.chargeBeeSubscriptionId
+      );
+      chargeBee = chargeBee?.data;
+    }
     // }
 
-    return { id, ...user, paddle: paddle };
+    return { id, ...user, paddle: paddle, chargeBee };
   } else {
     console.log("No such document!");
     return null;
@@ -130,6 +138,76 @@ export async function checkPaddleSubs(id) {
     }
 
     return { id, ...user, paddle: paddle };
+  } else {
+    console.log("No such document!");
+    return null;
+  }
+}
+
+export async function checkChargeBeeSubs(id) {
+  const docRef = doc(db, collName, id);
+  const docSnap = await getDoc(docRef);
+
+  console.log("Checking user chargebee subs ...", id);
+
+  let selectChargeBee = null;
+  if (docSnap.exists()) {
+    let user = docSnap.data();
+
+    let chargeBee = null;
+    if (!user.chargeBee) {
+      chargeBee = await axios.get("/api/chargebee/getSubscriptions");
+      // paddle = await axios.post("/api/subs/getmail?email=" + user.email);
+      chargeBee = chargeBee?.data;
+      // console.log(chargeBee);
+
+      let subscription = null;
+
+      for (let i = 0; i < chargeBee.length; i++) {
+        const sub = chargeBee[i];
+        if (sub?.customer.email)
+          if (sub.customer.email === user.email) {
+            subscription = sub;
+          }
+      }
+
+      if (subscription) {
+        const cic = await updateUserData(
+          id,
+          "chargeBeeCustomerId",
+          subscription.customer.id,
+          false
+        );
+        const cis = await updateUserData(
+          id,
+          "chargeBeeSubscriptionId",
+          subscription.subscription.id,
+          false
+        );
+
+        selectChargeBee = subscription;
+      }
+
+      // if (paddle.result) {
+      //   let paddleId = paddle.result.user_id;
+      //   if (!paddleId) paddleId = paddle.result?.user?.user_id;
+      //   if (paddleId) {
+      //     const cid = await updateUserData(id, "paddleId", paddleId, false);
+      //   }
+
+      //   const subId = paddle.result?.subscription_id;
+      //   if (subId) {
+      //     const cid = await updateUserData(id, "subscription_id", subId, false);
+      //   }
+      // }
+    }
+
+    return {
+      id,
+      ...user,
+      FullchargeBee: selectChargeBee,
+      chargeBee: selectChargeBee?.subscription,
+    };
   } else {
     console.log("No such document!");
     return null;

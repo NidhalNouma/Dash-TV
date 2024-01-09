@@ -1,7 +1,11 @@
 import React, { Fragment } from "react";
 import { Input, Button } from "react-daisyui";
 import { LoadBtn } from "../../components/Buttons";
-import { GetUserContext, UserTradingView } from "../../hooks/UserHook";
+import {
+  GetUserContext,
+  UserTradingView,
+  checkMembership,
+} from "../../hooks/UserHook";
 
 import checkLifeTime from "../../lifetime/check";
 
@@ -16,30 +20,22 @@ function Username() {
   const { tvusername, setTVUserName, error, save, edit, setEdit, usernames } =
     UserTradingView(fullUser.id, fullUser.tradingViewUserName);
 
+  const mem = checkMembership(fullUser);
+
   return (
     <Fragment>
-      {membership && (
+      {mem?.active && (
         <div>
           {edit ? (
-            <p>Set your user tradingview username to get our indicators.</p>
+            <p>Set your tradingview username to get our indicators.</p>
           ) : (
-            <p>
-              This is your tradingview user name click{" "}
-              <spam
-                className="bg-gray-600 font-bold py-[1px] px-2 rounded-xl cursor-pointer"
-                onClick={() => setEdit(true)}
-              >
-                here
-              </spam>{" "}
-              to edit.
-            </p>
+            <p></p>
           )}
         </div>
       )}
-      {!membership ||
-      (membership.state !== "active" && membership.status !== "completed") ? (
+      {!mem?.active ? (
         <div className="mt-3 flex mx-auto">
-          <p className="bg-red-600 px-2 rounded-xl">
+          <p className="bg-red-600 px-4 py-2 rounded">
             No available active membership!
           </p>
         </div>
@@ -47,6 +43,24 @@ function Username() {
         <div className="mt-4 mx-auto">
           {edit ? (
             <div className="relative flex items-center">
+              <span
+                className="mr-2 text-white/50 cursor-pointer"
+                onClick={() => {
+                  setEdit(false);
+                  setTVUserName(fullUser.tradingViewUserName);
+                }}
+              >
+                <svg
+                  stroke="currentColor"
+                  fill="currentColor"
+                  className="h-6 w-6 storke-black"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"></path>
+                </svg>
+              </span>
               <Input
                 className="bg-transparent border-white"
                 placeholder="Tradingview username"
@@ -63,7 +77,7 @@ function Username() {
               </LoadBtn>
 
               {
-                <div className="w-full absolute bg-gray-600 top-full mt-2 rounded-xl">
+                <div className="w-full absolute bg-gray-600 top-full mt-2 rounded-xl max-h-[28vh] overflow-y-scroll">
                   {usernames.map((u, i) => (
                     <div
                       key={i}
@@ -80,11 +94,15 @@ function Username() {
               }
             </div>
           ) : (
-            <Fragment>
-              <span className="px-4 py-2 bg-gray-700 rounded-xl text-sm">
+            <div className="">
+              <span className="">TradingView UserName: </span>
+              <span
+                className="px-4 py-2 bg-gray-700 rounded text-sm cursor-pointer "
+                onClick={() => setEdit(true)}
+              >
                 {tvusername}
               </span>
-            </Fragment>
+            </div>
           )}
         </div>
       )}

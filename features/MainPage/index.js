@@ -10,29 +10,21 @@ function Index({ children, page }) {
   return (
     <main className="h-full">
       <div className="text-white mb-4 flex flex-col h-full">
-        <div className="w-full text-center z-50 sticky top-0 bg-black pb-4 mb-4 backdrop-blur-lg bg-opacity-80">
+        <div className="mt-2 px-3 w-full text-center flex sm:flex-row flex-col items-center  sm:items-end justify-between z-50 sticky top-0 bg-black pb-4 mb-4 backdrop-blur-lg bg-opacity-80">
           <div className="">
             <Image
-              className="mx-auto"
+              className="mx-auto "
               src="/logo.png"
               alt="logo"
               width={140}
               height={140}
             />
           </div>
-          <Button
-            className="bg-transparent border-none text-xs hover:bg-transparent absolute right-0 top-0"
-            onClick={() => {
-              SignOut();
-              router.push("/signin");
-            }}
-          >
-            Sign out
-          </Button>
+
           <ButtonGroup>
             <Button
               animation={false}
-              className="bg-transparent border-primary w-28 hover:border-primary"
+              className="bg-transparent border-primary px-2 w-32  hover:border-primary text-sm font-semibold"
               size="md"
               active={page === 1}
               onClick={() => router.push("/tradingview")}
@@ -41,7 +33,7 @@ function Index({ children, page }) {
             </Button>
             <Button
               animation={false}
-              className="bg-transparent border-primary w-28 hover:border-primary"
+              className="bg-transparent border-primary px-2 w-32 hover:border-primary text-sm font-semibold"
               size="md"
               active={page === 2}
               onClick={() => router.push("/membership")}
@@ -58,6 +50,16 @@ function Index({ children, page }) {
               videos
             </Button> */}
           </ButtonGroup>
+
+          <Button
+            className="bg-transparent border-none text-xs hover:bg-transparent mb-auto sm:block hidden w-[140px]"
+            onClick={() => {
+              SignOut();
+              router.push("/signin");
+            }}
+          >
+            Sign out
+          </Button>
         </div>
         {children}
       </div>

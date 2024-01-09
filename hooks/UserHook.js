@@ -4,6 +4,7 @@ import {
   updateUserTVuserName,
   addNewUser,
   checkPaddleSubs,
+  checkChargeBeeSubs,
 } from "../db/user";
 import { checkUser } from "../db/sign";
 import { SearchTVUserName } from "./TradingViewHook";
@@ -87,9 +88,33 @@ export const UserTradingView = (userId, name) => {
 };
 
 export const recheckSubs = async (userId, setFullUser) => {
-  const r = await checkPaddleSubs(userId);
-  if (r) {
-    console.log(r);
-    setFullUser(r);
+  const r1 = await checkChargeBeeSubs(userId);
+  if (r1) {
+    // console.log(r1);
+    setFullUser(r1);
   }
+  // const r = await checkPaddleSubs(userId);
+  // if (r) {
+  //   // console.log(r);
+  //   setFullUser(r);
+  // }
+};
+
+export const checkMembership = (user) => {
+  let r = {};
+  if (user) {
+    if (user.chargeBee) {
+      const sub = user.chargeBee;
+      console.log(sub);
+      if (sub.status === "active") {
+        r["active"] = true;
+      }
+      r["status"] = sub.status;
+      if (sub.subscription_items)
+        r["sub_name_id"] = sub.subscription_items[0]?.item_price_id;
+      r["next_billing_at"] = sub?.next_billing_at;
+    }
+  }
+
+  return r;
 };

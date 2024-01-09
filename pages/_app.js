@@ -4,7 +4,7 @@ import { useRouter } from "next/router";
 import { useState, useEffect, Fragment } from "react";
 import { checkUser } from "../db/sign";
 
-import { UserCC, GetFullUser } from "../hooks/UserHook";
+import { UserCC, GetFullUser, checkMembership } from "../hooks/UserHook";
 
 import LoadingPage from "../features/LoadingPage";
 
@@ -21,8 +21,11 @@ function MyApp({ Component, pageProps }) {
         pathname === "/signin" ||
         pathname === "/signup" ||
         pathname === "/forget-password"
-      )
-        router.push("/tradingview");
+      ) {
+        const mem = checkMembership(fullUser);
+        if (mem.active) router.push("/tradingview");
+        else router.push("/membership");
+      }
     } else if (!fullUser) {
       if (
         pathname !== "/signin" &&

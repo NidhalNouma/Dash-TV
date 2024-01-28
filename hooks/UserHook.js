@@ -106,7 +106,7 @@ export const checkMembership = (user) => {
     if (user.chargeBee) {
       const sub = user.chargeBee;
       console.log(sub);
-      if (sub.status === "active") {
+      if (sub.status === "active" || sub.status === "in_trial") {
         r["active"] = true;
       }
       r["status"] = sub.status;

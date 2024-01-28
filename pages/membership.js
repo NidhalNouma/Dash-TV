@@ -71,10 +71,12 @@ function index() {
               <div className="mt-5">
                 {mem.status && (
                   <div className="">
-                    State:{" "}
+                    Status:{" "}
                     <span
                       className={`${
-                        mem.status === "active" ? "bg-green-700" : "bg-red-600"
+                        mem.status === "active" || mem.status === "in_trial"
+                          ? "bg-green-700"
+                          : "bg-red-600"
                       }  rounded-xl px-2`}
                     >
                       {mem.status}

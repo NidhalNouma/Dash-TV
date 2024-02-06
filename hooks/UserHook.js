@@ -87,6 +87,33 @@ export const UserTradingView = (userId, name) => {
   return { tvusername, setTVUserName, error, save, edit, setEdit, usernames };
 };
 
+export const SetDiscordUserName = (userId, name) => {
+  const [dUserName, setDUserName] = useState(name);
+  const [error, setError] = useState();
+  const [edit, setEdit] = useState(name ? false : true);
+
+  // const { search, usernames } = SearchTVUserName();
+
+  async function save(onComplete) {
+    if (!dUserName) {
+      setError("Fill your username");
+      return null;
+    }
+    const r = await updateUserTVuserName(userId, dUserName, name);
+    onComplete(r);
+    setEdit(false);
+    return r;
+  }
+
+  // useEffect(() => {
+  //   if (dUserName.length > 0 && edit) {
+  //     search(dUserName);
+  //   }
+  // }, [dUserName]);
+
+  return { dUserName, setDUserName, error, save, edit, setEdit };
+};
+
 export const recheckSubs = async (userId, setFullUser) => {
   const r1 = await checkChargeBeeSubs(userId);
   if (r1) {

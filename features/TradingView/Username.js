@@ -35,49 +35,51 @@ function Username() {
       )}
       {!mem?.active ? (
         <div className="mt-3 flex mx-auto">
-          <p className="bg-red-600 px-4 py-2 rounded">
+          <p className="bg-red-600  py-2 rounded">
             No available active membership!
           </p>
         </div>
       ) : (
         <div className="mt-4 mx-auto">
           {edit ? (
-            <div className="relative flex items-center">
-              <span
-                className="mr-2 text-white/50 cursor-pointer"
-                onClick={() => {
-                  setEdit(false);
-                  setTVUserName(fullUser.tradingViewUserName);
-                }}
-              >
-                <svg
-                  stroke="currentColor"
-                  fill="currentColor"
-                  className="h-6 w-6 storke-black"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  xmlns="http://www.w3.org/2000/svg"
+            <div className="relative block md:flex items-center">
+              <div className="flex items-center">
+                <span
+                  className="mr-2 text-white/50 cursor-pointer"
+                  onClick={() => {
+                    setEdit(false);
+                    setTVUserName(fullUser.tradingViewUserName);
+                  }}
                 >
-                  <path d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"></path>
-                </svg>
-              </span>
-              <Input
-                className="bg-transparent border-white"
-                placeholder="Tradingview username"
-                type="text"
-                value={tvusername}
-                onChange={(e) => setTVUserName(e.target.value)}
-              />
+                  <svg
+                    stroke="currentColor"
+                    fill="currentColor"
+                    className="h-6 w-6 storke-black"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path d="M256 48C140.559 48 48 140.559 48 256c0 115.436 92.559 208 208 208 115.435 0 208-92.564 208-208 0-115.441-92.564-208-208-208zm104.002 282.881l-29.12 29.117L256 285.117l-74.881 74.881-29.121-29.117L226.881 256l-74.883-74.881 29.121-29.116L256 226.881l74.881-74.878 29.12 29.116L285.119 256l74.883 74.881z"></path>
+                  </svg>
+                </span>
+                <Input
+                  className="bg-transparent border-white"
+                  placeholder="Tradingview username"
+                  type="text"
+                  value={tvusername}
+                  onChange={(e) => setTVUserName(e.target.value)}
+                />
+              </div>
               <LoadBtn
                 loadColor="bg-white"
-                className="ml-2 text-black hover:bg-white px-5"
+                className="ml-2 text-black hover:bg-white my-2"
                 onClick={async () => await save(setFullUser)}
               >
                 Save
               </LoadBtn>
 
               {
-                <div className="w-full absolute bg-gray-600 top-full mt-2 rounded-xl max-h-[28vh] overflow-y-scroll">
+                <div className="w-full absolute bg-gray-600 top-full my-2 rounded-xl max-h-[28vh] overflow-y-scroll">
                   {usernames.map((u, i) => (
                     <div
                       key={i}
@@ -97,7 +99,7 @@ function Username() {
             <div className="">
               <span className="">TradingView UserName: </span>
               <span
-                className="px-4 py-2 bg-gray-700 rounded text-sm cursor-pointer "
+                className="px-4 py-2 bg-gray-700 rounded text-sm cursor-pointer my-2"
                 onClick={() => setEdit(true)}
               >
                 {tvusername}

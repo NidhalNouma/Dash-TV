@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }) {
         pathname === "/forget-password"
       ) {
         const mem = checkMembership(fullUser);
-        if (mem.active) router.push("/tradingview");
+        if (!mem.active) router.push("/tradingview");
         else router.push("/membership");
       }
     } else if (!fullUser) {

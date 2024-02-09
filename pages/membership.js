@@ -29,7 +29,8 @@ function index() {
             <div className="">
               <p className="py-2 px-4 bg-red-600 rounded">
                 No available membership under this email{" "}
-                <span className="font-bold">{fullUser.email}</span>{" "}
+                <span className="font-bold">{fullUser.email}</span> <br />
+                If you sign up to a membership click on the RECHECK button.
               </p>
               <p className="mt-3">
                 Click{" "}
@@ -50,7 +51,7 @@ function index() {
                 onClick={async () =>
                   await recheckSubs(fullUser.id, setFullUser)
                 }
-                loadMsg="This may take up to 10 mins please allow it to fully load!"
+                // loadMsg="This may take up to 10 mins please allow it to fully load!"
               >
                 Recheck
               </LoadBtn>

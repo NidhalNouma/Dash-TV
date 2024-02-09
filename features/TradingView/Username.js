@@ -35,7 +35,7 @@ function Username() {
       )}
       {!mem?.active ? (
         <div className="mt-3 flex mx-auto">
-          <p className="bg-red-600  py-2 rounded">
+          <p className="bg-red-600  py-2 px-4 rounded">
             No available active membership!
           </p>
         </div>

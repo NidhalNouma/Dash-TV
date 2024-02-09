@@ -34,7 +34,8 @@ export async function getSubscriptionsList() {
 
   try {
     while (loop) {
-      if (offset.length > 0) purl = purl + "&offset=" + offset;
+      if (offset.length > 0)
+        purl = purl + "&offset=" + offset + "&id[is]=AzZctuTbVSOL5CZv7";
       const req = await axios({
         url: purl,
         baseURL: URL,
@@ -71,6 +72,59 @@ export async function getSubscriptionsList() {
   return r;
 }
 
+export async function getSubscriptionByEmail(email) {
+  let purl_cus = "/api/v2/customers/?limit=100";
+  let purl = "/api/v2/subscriptions/?limit=100";
+  let r = [];
+  let offset = "";
+
+  let subscription = null;
+  let customer = null;
+
+  //   console.log("get subscriptions list");
+
+  try {
+    const get_customer = await axios({
+      url: purl_cus + "&email[is]=angela.m.s.taylor@hotmail.com",
+      baseURL: URL,
+      method: "GET",
+      headers: {
+        Authorization: authorization,
+        // "Access-Control-Allow-Origin": "*",
+      },
+    });
+
+    // console.log(get_customer.data.list[0]);
+
+    if (get_customer.data?.list?.length > 0)
+      customer = get_customer.data.list[0].customer;
+
+    if (customer) {
+      // console.log("customer", customer);
+      const get_sub = await axios({
+        url: purl + "&customer_id[is]=" + customer.id,
+        baseURL: URL,
+        method: "GET",
+        headers: {
+          Authorization: authorization,
+          // "Access-Control-Allow-Origin": "*",
+        },
+      });
+
+      // console.log(get_sub.data);
+      if (get_sub.data?.list?.length > 0)
+        subscription = get_sub.data.list[0].subscription;
+
+      // console.log(r);
+    }
+  } catch (e) {
+    console.log("get subscription error => ", e.message);
+  }
+
+  r = [{ customer, subscription }];
+
+  return r;
+}
 export async function getSubscription(id) {
   const purl = "/api/v2/subscriptions/" + id;
   let r = null;

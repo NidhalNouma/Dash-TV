@@ -40,6 +40,7 @@ export const TVIndicatorsList = [
   "XDFGoanwZt24TxFCSN28xUhyFSW8vAms", //"6eDf1Joz-TrustedSignals-Doji-Scalper",
   "nEC0YkGFcAzDkc4qx9uGTvLT6Q91TgN8", //"sOULLUJh-TrustedSignals-Oscillator-Divergences",
   "sOeVKRO9AJ0t2KduUC10LTQ10OLZHQ5G", //"jXfiXCih-TrustedSignals",
+  "4d013637dfe6434ab09b71c658d8ae2c",
 ];
 
 export const tradingview_web = {

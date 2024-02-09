@@ -104,6 +104,16 @@ function Username() {
               >
                 {tvusername}
               </span>
+
+              <div className="mt-4">
+                <LoadBtn
+                  loadColor="bg-white"
+                  className="ml-2 text-white bg-transparent px-4 my-0"
+                  onClick={async () => await save(setFullUser)}
+                >
+                  Get Access
+                </LoadBtn>
+              </div>
             </div>
           )}
         </div>

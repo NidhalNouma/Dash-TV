@@ -85,7 +85,7 @@ export async function getSubscriptionByEmail(email) {
 
   try {
     const get_customer = await axios({
-      url: purl_cus + "&email[is]=angela.m.s.taylor@hotmail.com",
+      url: purl_cus + "&email[is]=" + email,
       baseURL: URL,
       method: "GET",
       headers: {

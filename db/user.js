@@ -161,7 +161,7 @@ export async function checkChargeBeeSubs(id) {
       );
       // paddle = await axios.post("/api/subs/getmail?email=" + user.email);
       chargeBee = chargeBee?.data;
-      console.log(chargeBee);
+      // console.log(chargeBee);
 
       let subscription = null;
 
@@ -172,6 +172,7 @@ export async function checkChargeBeeSubs(id) {
         // }
         if (sub?.customer.email)
           if (sub.customer.email === user.email) {
+            // console.log(sub);
             subscription = sub;
           }
       }

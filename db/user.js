@@ -170,7 +170,7 @@ export async function checkChargeBeeSubs(id) {
         // if (sub.subscription.id === "AzZctuTbVSOL5CZv7") {
         //   console.log(sub?.customer.email, sub);
         // }
-        if (sub?.customer.email)
+        if (sub?.customer?.email)
           if (sub.customer.email === user.email) {
             // console.log(sub);
             subscription = sub;

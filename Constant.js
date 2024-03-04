@@ -43,7 +43,10 @@ export const TVIndicatorsList = [
   "4d013637dfe6434ab09b71c658d8ae2c",
 ];
 
+const lifetimeScriptIds = ["99584ca659b64853b241ee90edb7e6bc"];
+
 export const tradingview_web = {
   sessionId: process.env.NEXT_PUBLIC_SESSION_ID_TV,
   scriptIds: TVIndicatorsList,
+  lifetimeScriptIds: lifetimeScriptIds,
 };

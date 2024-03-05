@@ -11,10 +11,11 @@ export default async function handler(req, res) {
   let IDs = tradingview_web.scriptIds;
 
   if (true) IDs = [...IDs, ...tradingview_web.lifetimeScriptIds];
+  console.log(IDs);
 
   //   tradingview_web.scriptIds.forEach(async function (id, i) {
   for (let i = 0; i < IDs.length; i++) {
-    let id = tradingview_web.scriptIds[i];
+    let id = IDs[i];
     id = id.replace(/\s/g, "");
     console.log("add ... ", id, username);
     try {

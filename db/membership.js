@@ -115,7 +115,7 @@ export async function getSubscriptionByEmail(email) {
       if (get_sub.data?.list?.length > 0)
         subscription = get_sub.data.list[0].subscription;
 
-      // console.log(r);
+      // console.log(subscription);
     }
   } catch (e) {
     console.log("get subscription error => ", e.message);

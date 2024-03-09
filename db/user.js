@@ -158,6 +158,7 @@ export async function checkChargeBeeSubs(id) {
     if (!user.chargeBee) {
       chargeBee = await axios.get(
         "/api/chargebee/getSubscription?email=" + user.email
+        // "/api/chargebee/getSubscription?email=eseosaamegor@gmail.com"
       );
       // paddle = await axios.post("/api/subs/getmail?email=" + user.email);
       chargeBee = chargeBee?.data;
@@ -167,11 +168,12 @@ export async function checkChargeBeeSubs(id) {
 
       for (let i = 0; i < chargeBee.length; i++) {
         const sub = chargeBee[i];
+        // console.log(sub);
         // if (sub.subscription.id === "AzZctuTbVSOL5CZv7") {
         //   console.log(sub?.customer.email, sub);
         // }
         if (sub?.customer?.email)
-          if (sub.customer.email === user.email) {
+          if (sub.customer.email?.toLowerCase() === user.email?.toLowerCase()) {
             // console.log(sub);
             subscription = sub;
           }
